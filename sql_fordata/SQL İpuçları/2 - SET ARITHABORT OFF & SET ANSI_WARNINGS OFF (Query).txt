@@ -1,0 +1,15 @@
+SET ARITHABORT OFF
+SET ANSI_WARNINGS OFF
+
+select COUNT(case when s.channelKey = 3 and s.SalesAmount >= 200000 then s.SalesKey end) as ChannelKey_3
+,COUNT(case when s.channelKey = 4 and s.SalesAmount >= 200000 then s.SalesKey end) as ChannelKey_4
+from FactSales s
+
+
+select COUNT(case when s.channelKey = 3 and s.SalesAmount >= 200000 then s.SalesAmount end) 
+	     / 
+	   COUNT(case when s.channelKey = 4 and s.SalesAmount >= 200000 then s.SalesAmount end) as Ratio
+from FactSales s 
+
+
+select 1 / 0

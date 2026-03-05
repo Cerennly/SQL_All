@@ -1,0 +1,62 @@
+
+-- View
+
+create view vw_sales_summary as 
+
+select p.ProductName
+,st.StoreName
+,SUM(s.SalesAmount) as SalesAmount
+from FactSales s 
+left join DimProduct p on p.ProductKey = s.ProductKey
+left join DimStore st on st.StoreKey = s.StoreKey
+where 1 = 1 
+and s.SalesAmount >= 10000
+group by p.ProductName
+,st.StoreName
+
+select * from vw_sales_summary
+
+drop view vw_sales_summary
+
+
+-- Query --> Parse --> Optimize --> Compile --> Execute --> Results
+
+--Query --> Sorgu 
+--Parse --> Parse etmek ayrıştırma anlamına gelir. Sorgunun doğru bir şekilde yazılıp yazılmadığını ve veri tabanı nesnelerine (tablo, sütun, vb.) uygun bir şekilde başvurulup başvurulmadığını kontrol eder.
+--Optimize --> Optimizasyon aşamasında, veritabanı yönetim sistemi, farklı sorgu planları oluşturarak en iyi performansı sağlayacak yolu belirler.
+--Compile --> Optimizasyon sürecinin ardından sorguyu derler.
+--Execute --> sorgunun sonuçları hesaplanır ve işlenir.
+--Results --> sorgunun sonuçları kullanıcıya iletilir.
+
+
+
+-- Stored Procedure
+
+create procedure Pro1 as
+select * 
+from FactSales s 
+where 1 = 1 
+and s.DateKey >= '20080701'
+and s.SalesAmount >= 50000
+go
+
+exec Pro1
+
+drop procedure Pro1
+
+create procedure Pro2
+
+@ChannelKey INT
+as
+select * 
+from DimChannel 
+where ChannelKey = @ChannelKey
+go
+
+exec Pro2 @ChannelKey = 2
+
+drop procedure Pro2
+
+
+
+

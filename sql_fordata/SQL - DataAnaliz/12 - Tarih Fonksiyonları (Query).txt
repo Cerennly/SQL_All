@@ -1,0 +1,34 @@
+--select GETDATE() as 'Bugün Datetime'
+--select CAST(GETDATE() as date) as 'Bugün'
+ 
+--select s.StoreKey
+--,s.StoreName
+--,s.OpenDate
+--,CAST(GETDATE() as date) as 'Bugün'
+--,YEAR(s.OpenDate) as yil
+--,MONTH(s.OpenDate) as ay
+--,Eomonth(s.OpenDate) as EndOfMonth
+--,DATEDIFF(YEAR, s.OpenDate, GETDATE()) as 'Yıl Farkı'
+--,DATEADD(MONTH, -2, s.OpenDate) as 'İki ay öncesi'
+--from DimStore s 
+
+--select count(*)
+--from FactSales a
+--where a.DateKey >= DATEADD(MONTH, -12, GETDATE()) -- Dinamik olarak bir yıl öncesini getirir.
+
+
+
+select EOMONTH(a.DateKey) as 'Ay sonu'
+,count(*) as adet
+from FactSales a
+group by EOMONTH(a.DateKey)
+order by 1 
+
+
+select YEAR(a.Datekey) as yil
+,MONTH(a.Datekey) as ay
+,count(*) as adet
+from FactSales a
+group by YEAR(a.Datekey)
+,MONTH(a.DateKey)
+order by 1, 2

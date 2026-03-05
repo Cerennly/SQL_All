@@ -1,0 +1,81 @@
+
+select s.StoreKey
+,s.StoreName
+,s.GeographyKey
+,s.StoreType
+,s.Status
+,s.OpenDate
+,s.CloseDate
+,s.EmployeeCount
+,s.LastRemodelDate
+,CAST(s.LastRemodelDate as date) as LastRemodelDate_ShortDate
+from DimStore as s
+where 1 = 1 
+--and s.StoreName = 'Miami'
+--and s.StoreName like '%Miami%'
+--and s.StoreName like 'Miami%'
+--and s.StoreName like '%Miami'
+--and s.StoreName like '%No.1 Store'
+--and s.StoreName like 'Contoso Houston%'
+--and s.OpenDate = '20040412'
+--and s.StoreKey = 303
+--and s.LastRemodelDate = '20090618'
+--and CAST(s.LastRemodelDate as date) = '20090618'
+--and s.GeographyKey = 757
+--and s.StoreKey between 1 and 5
+--and s.OpenDate between '20040101' and '20040131'
+order by s.OpenDate desc
+
+
+---------------------------------------
+
+
+select count(a.CloseDate)
+from DimStore a
+
+select count(*)
+from DimStore a
+where 1 = 1
+and a.CloseDate is not null
+
+---------------------------------------
+
+select count(distinct a.StoreType)
+from DimStore a
+
+select distinct a.StoreType
+from DimStore a
+
+select distinct a.StoreKey
+from DimStore a
+
+---------------------------------------
+
+select SUM(a.EmployeeCount) as EmployeeCount_SUM
+from DimStore a 
+
+select MAX(a.EmployeeCount) as EmployeeCount_MAX
+from DimStore a 
+
+select MIN(a.EmployeeCount) as EmployeeCount_MIN
+from DimStore a 
+
+select AVG(a.EmployeeCount) as EmployeeCount_AVG
+from DimStore a 
+
+select *
+from DimStore a
+where a.EmployeeCount is not null
+order by a.EmployeeCount desc
+
+---------------------------------------
+
+select 4 + 2
+
+select 4 - 2
+
+select 5 * 3 
+
+select 16 / 5 
+
+select CAST(16 as float) / 5

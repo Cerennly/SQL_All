@@ -1,0 +1,48 @@
+drop table if exists #sales
+create table #sales
+(
+    ProductName Varchar(50),
+	SalesDate datetime,
+	SalesAmount Float 
+)
+
+INSERT INTO #sales
+VALUES
+    ('Phone', '20230610 09:45:13', 500),
+	('Phone', '20230612 14:53:25', 500),
+	('Phone', '20230613 11:45:25', 500),
+	('Phone', '20230614 11:20:18', 500),
+	('TV', '20230615 10:12:24', 2500),
+	('TV', '20230616 15:55:45', 2500),
+	('TV', '20230617 13:21:06', 2500),
+	('Computer', '20230618 15:55:45', 1000),
+	('Computer', '20230618 11:20:17', 1000),
+	('Computer', '20230620 13:35:52', 1000)
+
+select *
+from #sales
+order by 2
+
+
+select *
+,SUM(s.SalesAmount) Over() as Cumulative_SalesAmount
+,s.SalesAmount / SUM(s.SalesAmount) Over() as Ratio
+,SUM(s.SalesAmount) Over(Partition by s.ProductName) as Cumulative_SalesAmount_Partitionby
+,MAX(s.SalesAmount) Over() as MAX_SalesAmount
+,MAX(s.SalesAmount) Over(Partition by s.ProductName) as MAX_SalesAmount_Partitionby
+from #sales s 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

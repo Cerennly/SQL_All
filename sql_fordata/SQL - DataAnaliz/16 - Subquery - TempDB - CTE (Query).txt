@@ -1,0 +1,79 @@
+--------------Subquery
+
+select t.NewColumn
+,count(*) as adet
+from (
+
+			select p.ProductKey
+			,p.ProductName
+			,p.UnitCost
+			,case when p.UnitCost < 100 then 'iyi'
+				  when p.UnitCost < 200 then 'orta'
+				  else 'kötü'
+				  end as NewColumn
+			from DimProduct p
+
+		) t
+group by t.NewColumn
+order by adet desc
+
+
+--------------TempDB
+
+IF OBJECT_ID('tempdb.dbo.#vazo') IS NOT NULL DROP TABLE #vazo
+
+select p.ProductKey
+	  ,p.ProductName
+	  ,p.UnitCost
+	  ,case when p.UnitCost < 100 then 'iyi'
+		    when p.UnitCost < 200 then 'orta'
+		    else 'kötü'
+		    end as NewColumn
+into #vazo
+from DimProduct p
+
+
+select v.NewColumn
+,count(*) as adet
+from #vazo v 
+group by v.NewColumn
+order by adet desc
+
+
+
+--------------CTE (Common Table Expression)
+
+with kalem as(
+
+select p.ProductKey
+	  ,p.ProductName
+	  ,p.UnitCost
+	  ,case when p.UnitCost < 100 then 'iyi'
+		    when p.UnitCost < 200 then 'orta'
+		    else 'kötü'
+		    end as NewColumn
+from DimProduct p
+
+) 
+
+select k.NewColumn
+,count(*) as adet
+from kalem k
+group by k.NewColumn
+order by adet desc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

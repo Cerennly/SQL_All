@@ -1,0 +1,18 @@
+SET LANGUAGE turkish    
+
+select YEAR(s.DateKey) as Year
+,MONTH(s.DateKey) as Month
+,DATENAME(MONTH, s.Datekey) as MonthName
+,SUM(s.SalesAmount)/1000000 as SalesAmount
+from FactSales s 
+where 1 = 1 
+and s.channelKey = 4 
+and s.SalesAmount >= 10000
+and YEAR(s.DateKey) = 2009
+group by YEAR(s.DateKey) 
+,MONTH(s.DateKey) 
+,DATENAME(MONTH, s.Datekey) 
+order by 2
+
+
+SELECT * FROM sys.syslanguages -- SQL server'ın desteklediği diller.

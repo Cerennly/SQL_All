@@ -1,0 +1,228 @@
+Create table Departments (
+
+	DepartmentID INT PRIMARY KEY,
+	DepartmentName varchar(50)
+
+)
+
+Create table Employees (
+
+	EmployeeID INT PRIMARY KEY,
+	Name Varchar(50),
+	SurName Varchar(50),
+	DepartmentID INT,
+	-- FOREIGN KEY (DepartmentID) REFERENCES Departments (DepartmentID)
+)
+
+
+--Drop table Departments
+--Drop table Employees
+
+--alter table departments drop column DepartmentName
+--alter table Employees drop column Surname
+
+
+-- DDL --> CREATE, ALTER, DROP
+-- DML --> SELECT, INSERT, UPDATE, DELETE
+
+INSERT INTO Departments (DepartmentID, DepartmentName)
+VALUES (1, 'IT'), (2, 'Finance'), (3, 'HR')
+
+INSERT INTO Employees
+VALUES (1, 'Dexter', 'Morgan', 1),
+		(2, 'Hugo', 'Reyes', 2),
+		(3, 'Jack', 'Torrance', 35)
+
+
+select * from departments
+select * from Employees
+
+
+UPDATE Employees
+SET Name = 'Dex', Surname = 'Morgan jr.'
+where EmployeeID = 1
+
+DELETE FROM Employees
+where DepartmentID = 2
+
+
+
+
+-- Aşağıda DDL ve DML kavramları hakkında bazı örnekler yaptık. Join içeren örneklere, Join videolarından sonra göz atmanızı tavsiye ederiz.
+
+
+
+			-- DDL (Data Definition Language) CREATE, ALTER, DROP
+
+	-- CREATE;
+
+ --Create ile Database oluşturma örneği;
+ --Create database testDB
+
+	-- ALTER;
+
+--Bir tabloya sütun&sütunlar eklemek için;
+--ALTER TABLE tablo_adı ADD sütun_adı veri_türü
+--ALTER TABLE tablo_adı ADD sütun_adı veri_türü, sütun_adı veri_türü, sütun_adı veri_türü
+
+--1 tablodaki sütunu unique yapmak için;
+--ALTER TABLE Departments ADD UNIQUE(DepartmentName)
+
+--1 Tablodaki sütunu kaldırmak için;
+--ALTER TABLE Departments DROP COLUMN DepartmentName
+
+--1 tablodaki sütunun tipini değiştirmek; 
+--ALTER TABLE Departments ALTER COLUMN DepartmentName varchar(15)
+
+--Tablo ismi değiştirmek için;
+--EXEC SP_RENAME 'Departments','Departments_Yeni';
+
+--Tablodaki sütun ismini değiştirmek;
+--EXEC SP_RENAME 'Departments.DepartmentName', 'DepartmentName_Yeni'
+
+--Database ismini değiştirmek;
+--sp_renamedb ContosoRetailDW, ContosoRetailDW_Yeni
+
+	-- DROP;
+
+--DROP TABLE Departments (Departments tablosunu siler)
+
+--DROP DATABASE TestDB (TestDB veri tabanını siler)
+
+
+			-- DML (Data Manipulation Language) SELECT, INSERT, UPDATE, DELETE
+
+	-- INSERT INTO;
+
+---- Başka bir tablodan veya sorgudan dönen sonuçları eklemek için INSERT INTO ve SELECT birlikte kullanılabilir:
+
+--Create table Departments (
+
+--	DepartmentID INT PRIMARY KEY,
+--	DepartmentName varchar(50)
+
+--)
+
+--Create table Employees (
+
+--	EmployeeID INT PRIMARY KEY,
+--	Name Varchar(50),
+--	SurName Varchar(50),
+--	DepartmentID INT,
+
+--)
+
+
+--INSERT INTO Departments (DepartmentID, DepartmentName)
+--VALUES (1, 'IT'), (2, 'Finance'), (3, 'HR')
+
+--INSERT INTO Employees
+--VALUES (1, 'Dexter', 'Morgan', 1),
+--		(2, 'Hugo', 'Reyes', 2),
+--		(3, 'Jack', 'Torrance', 35)
+
+--INSERT INTO Employees (EmployeeID, Name, SurName, DepartmentID)
+--SELECT 4, 'Chandler', 'Bing', ds.DepartmentID
+--FROM Departments ds
+--WHERE ds.DepartmentID = 3;
+
+--select * from Departments
+--select * from Employees
+
+--Drop table Departments
+--Drop table Employees
+
+
+
+	-- UPDATE;
+
+------ UPDATE ile JOIN kullanarak, Jack Torrance'ın DepartmentID'sini 35 yerine 3 yapalım. 
+
+--Create table Departments (
+
+--	DepartmentID INT PRIMARY KEY,
+--	DepartmentName varchar(50)
+
+--)
+
+--Create table Employees (
+
+--	EmployeeID INT PRIMARY KEY,
+--	Name Varchar(50),
+--	SurName Varchar(50),
+--	DepartmentID INT,
+
+--)
+
+
+--INSERT INTO Departments (DepartmentID, DepartmentName)
+--VALUES (1, 'IT'), (2, 'Finance'), (3, 'HR')
+
+--INSERT INTO Employees
+--VALUES (1, 'Dexter', 'Morgan', 1),
+--		(2, 'Hugo', 'Reyes', 2),
+--		(3, 'Jack', 'Torrance', 35)
+
+
+--UPDATE Employees
+--SET DepartmentID = d.DepartmentID
+--FROM Employees e
+--INNER JOIN Departments d ON e.DepartmentID = 35 AND d.DepartmentName = 'HR'
+--WHERE e.Name = 'Jack' AND e.SurName = 'Torrance';
+
+--select * from Departments
+--select * from Employees
+
+--drop table Departments
+--drop table Employees
+
+
+	-- DELETE
+
+--İlk 2 satırı silelim.
+--DELETE TOP (2) from Departments
+
+--Satır sayısının %10’u kadar üstten silelim
+--DELETE TOP (10) PERCENT FROM Departments;
+
+-- JOIN kullanarak, Employees tablosundaki DepartmentIDlerden hangileri Departments tablosunda yoksa o satırları silelim.;
+
+--Create table Departments (
+
+--	DepartmentID INT PRIMARY KEY,
+--	DepartmentName varchar(50)
+
+--)
+
+--Create table Employees (
+
+--	EmployeeID INT PRIMARY KEY,
+--	Name Varchar(50),
+--	SurName Varchar(50),
+--	DepartmentID INT,
+
+--)
+
+
+--INSERT INTO Departments (DepartmentID, DepartmentName)
+--VALUES (1, 'IT'), (2, 'Finance'), (3, 'HR')
+
+--INSERT INTO Employees
+--VALUES (1, 'Dexter', 'Morgan', 1),
+--		(2, 'Hugo', 'Reyes', 2),
+--		(3, 'Jack', 'Torrance', 35)
+
+
+--DELETE e
+--FROM Employees e
+--LEFT JOIN Departments d ON e.DepartmentID = d.DepartmentID
+--WHERE d.DepartmentID IS NULL;
+
+--select * from departments
+--select * from Employees
+
+--drop table Departments
+--drop table Employees
+
+
+

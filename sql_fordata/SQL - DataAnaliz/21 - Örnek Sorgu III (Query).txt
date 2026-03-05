@@ -1,0 +1,25 @@
+-- Birim fiyatı, ortalama birim fiyattan fazla olan ürünlerin 2008 ocak ayındaki toplam satış tutarını milyon cinsinden gösteriniz 
+
+
+select SUM(fs.SalesAmount) / 1000000 as SalesAmount
+from FactSales fs
+
+inner join (
+
+				select dp.ProductKey
+				,dp.ProductName
+				,dp.UnitPrice
+				from DimProduct dp
+				where 1 = 1 
+				and dp.UnitPrice > (
+
+									select AVG(a.UnitPrice) as Average_UnitPrice
+									from DimProduct a 
+
+									)
+
+		  ) t on t.ProductKey = fs.ProductKey
+
+where 1 = 1 
+and YEAR(fs.Datekey) = 2008
+and MONTH(fs.Datekey) = 1

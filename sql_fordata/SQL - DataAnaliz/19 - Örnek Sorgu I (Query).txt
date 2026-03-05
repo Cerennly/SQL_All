@@ -1,0 +1,15 @@
+-- Hangi mağazalar 2007 yılında aynı ürünün 250'den fazla satışını yapmıştır?
+
+select st.StoreName
+,pd.ProductName
+,count(*) as adet
+from FactSales fs 
+left join DimStore st on st.StoreKey = fs.StoreKey
+left join DimProduct pd on pd.ProductKey = fs.ProductKey
+where 1 = 1 
+and YEAR(fs.DateKey) = 2007
+--and fs.DateKey between '20070101' and '20071231'
+group by st.StoreName
+,pd.ProductName
+having count(*) > 250
+order by adet desc

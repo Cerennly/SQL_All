@@ -1,0 +1,17 @@
+--select SUM(a.UnitPrice) as UnitPrice
+--from DimProduct a 
+--where a.ColorID = 2
+----or a.ColorID = 3
+
+--select SUM(case when a.ColorID = 2 then a.Unitprice end) as UnitPrice_2
+--,SUM(case when a.ColorID = 3 then a.Unitprice end) as UnitPrice_3
+--from DimProduct a
+
+
+
+select a.ColorName
+,SUM(a.UnitPrice) as UnitPrice
+,SUM(case when a.ColorID IN(2, 3) then a.Unitprice end) as filter_UnitPrice
+,SUM(case when a.StyleID = 1 then a.Unitprice end) as filter2_UnitPrice
+from DimProduct a
+group by a.ColorName

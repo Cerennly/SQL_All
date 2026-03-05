@@ -1,0 +1,24 @@
+
+-- select CAST(5.8 as int) as integer_sayi
+
+select s.StoreKey
+,s.StoreName
+,s.GeographyKey
+,s.StoreType
+,s.Status
+,s.OpenDate
+,s.CloseDate
+,s.EmployeeCount
+,s.LastRemodelDate
+,NULL as 'Null Kontrolü'
+,'' as 'Boşluk Kontrolü'
+from DimStore as s
+where s.StoreKey > 300
+--and s.GeographyKey = 529 
+--and s.StoreType = 'Reseller'
+--and s.StoreKey IN(1,2,3)
+--and s.StoreKey NOT IN(1,2,3)
+--and s.CloseDate = 'NULL'
+--and s.CloseDate is null
+--and s.CloseDate is not null
+--and s.CloseDate = ''

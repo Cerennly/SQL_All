@@ -1,0 +1,71 @@
+drop table if exists #customers
+
+create table #customers
+(
+    CustomerID INT,
+    CustomerName varchar(50),
+    Age INT
+)
+
+INSERT INTO #customers
+VALUES
+    (1, 'Jerry', 40),
+    (2, 'George', 35),
+    (3, 'Kramer', 45)
+
+
+
+drop table if exists #students 
+
+create table #students
+(
+    StudentID INT,
+    StudentName varchar(50)
+)  
+
+INSERT INTO #students
+VALUES
+    (3, 'Kramer'),
+    (4, 'Alex')
+
+
+
+
+select * from #customers
+
+select * from #students
+
+
+select * from #customers
+UNION -- Birleştireceğimiz tabloların sütun sayıları aynı olmalıdır.
+select * from #students
+
+select c.CustomerID, c.Age from #customers c
+UNION -- Birleştireceğimiz tabloların sütun veri tipleri aynı olmalıdır.
+select s.StudentID, s.StudentName from #students s
+
+---------------------------------------------------------------------------------------------------------------------
+
+-- UNION
+
+select c.CustomerID, c.CustomerName from #customers c
+
+select s.StudentID, s.StudentName from #students s
+
+select c.CustomerID, c.CustomerName from #customers c
+UNION -- UNION komutunda, aynı olan satırlardan yalnızca bir tanesini getirir. 
+select s.StudentID, s.StudentName from #students s
+
+---------------------------------------------------------------------------------------------------------------------
+
+-- UNION ALL
+
+select c.CustomerID, c.CustomerName from #customers c
+
+select s.StudentID, s.StudentName from #students s
+
+select c.CustomerID, c.CustomerName from #customers c
+UNION ALL -- UNION ALL komutunda, aynı olan satırlar dahil olmak üzere tüm satırları getirir.
+select s.StudentID, s.StudentName from #students s
+
+-- UNION veya UNION ALL komutları, her zaman en üstte yazılan tablonun sütun isimlerini kullanır. 

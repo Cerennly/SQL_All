@@ -1,0 +1,70 @@
+select p.ColorName, p.UnitCost
+from DimProduct p 
+where p.ColorName = 'Silver'
+order by p.UnitCost desc
+
+
+select p.ColorName
+,MAX(p.UnitCost) as UnitCost
+from DimProduct p
+group by p.ColorName
+order by UnitCost desc
+
+---------------------------------------
+
+select p.ColorName
+,p.BrandName
+,Count(*) as Adet
+from DimProduct p
+group by p.ColorName
+,p.BrandName
+order by Adet desc
+
+
+select distinct p.Colorname, p.BrandName
+from DimProduct p 
+
+---------------------------------------
+
+-- Sorgunun çalışma sırası --> From - Join - Where - Group by - Having - Select
+
+select p.ColorName
+,SUM(p.UnitPrice) as UnitPrice
+from DimProduct p
+group by p.ColorName
+order by UnitPrice desc
+ 
+
+select p.ColorName
+,SUM(p.UnitPrice) as UnitPrice
+from DimProduct p
+group by p.ColorName
+having SUM(p.UnitPrice) > 100000
+order by UnitPrice desc
+
+
+select p.ColorName
+,SUM(p.UnitPrice) as UnitPrice
+from DimProduct p
+where p.UnitPrice > 100000
+group by p.ColorName
+order by UnitPrice desc
+
+---------------------------------------
+
+select p.ColorName
+,count(distinct p.BrandName)
+from DimProduct p 
+group by p.ColorName
+having count(distinct p.BrandName) > 10
+
+
+select distinct p.BrandName
+from DimProduct p 
+where p.ColorName = 'Black'
+
+
+
+
+
+

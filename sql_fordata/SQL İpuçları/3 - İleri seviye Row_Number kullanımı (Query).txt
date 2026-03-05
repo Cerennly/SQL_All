@@ -1,0 +1,39 @@
+
+
+drop table if exists #sales
+create table #sales
+(
+    ProductName Varchar(50),
+	SalesDate datetime,
+	SalesAmount Float 
+)
+
+INSERT INTO #sales
+VALUES
+    ('Phone', '20230610 09:45:13', 500),
+	('Phone', NULL, 500),
+	('Phone', '20230612 14:53:25', 500),
+	('Phone', '20230614 11:20:18', 500),
+	('TV', '20230615 10:12:24', 2500),
+	('TV', NULL, 2500),
+	('TV', '20230617 13:21:06', 2500),
+	('Computer', '20230615 15:55:45', 1000),
+	('Computer', '20230612 11:20:17', 1000),
+	('Computer', '20230618 13:35:52', 1000)
+
+
+
+select *
+,ROW_NUMBER() over(order by s.SalesDate) as Rowno_1
+
+,case when s.SalesDate is not null 
+	  then ROW_NUMBER() over(order by s.SalesDate)
+	  end as Rowno_2
+
+,case when s.SalesDate is not null 
+	  then ROW_NUMBER() over(Partition by(case when s.SalesDate is not null then 1 else 0 end) order by s.SalesDate) 
+	  end as Rowno_3
+from #sales s
+
+
+

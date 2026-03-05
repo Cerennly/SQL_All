@@ -1,0 +1,18 @@
+-- 1 haziran 2004 yılından sonra açılıp şu anda kapalı olan mağazaların Channelname bazında 2007 yılındaki satışlarını milyon cinsinden bulunuz.
+
+select cn.ChannelName
+,SUM(fs.SalesAmount) / 1000000 as SalesAmount
+from FactSales fs
+left join DimChannel cn on cn.ChannelKey = fs.channelKey
+inner join DimStore st on st.StoreKey = fs.StoreKey and st.OpenDate >= '20040601' and st.CloseDate is not null
+--inner join (
+--				select *
+--				from DimStore a
+--				where 1 = 1 
+--				and a.OpenDate >= '20040601' 
+--				and a.CloseDate is not null
+--			) st on st.StoreKey = fs.StoreKey
+
+where 1 = 1 
+and fs.DateKey between '20070101' and '20071231'
+group by cn.ChannelName

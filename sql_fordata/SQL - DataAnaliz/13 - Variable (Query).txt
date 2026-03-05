@@ -1,0 +1,28 @@
+--declare @number int
+--set @number = 20
+
+--select *
+--from DimStore st
+--where st.StoreKey = @number
+
+declare @today date = '20080512' -- Pazartesi
+declare @LastBusinessDay_BeforeToday date
+
+select top 1 @LastBusinessDay_BeforeToday = d.Datekey
+from DimDate d
+where 1 = 1
+and d.IsWorkDay = 'WorkDay'
+and d.Datekey < @today
+order by d.Datekey desc
+
+declare @FirstDayOfPreviousMonth date = DATEADD(Day, 1, EOMONTH(DATEADD(MONTH, -2, @LastBusinessDay_BeforeToday)))
+declare @LastDayOfPreviousMonth date = EOMONTH(DATEADD(MONTH, -1, @LastBusinessDay_BeforeToday))
+
+select @today as today
+select @LastBusinessDay_BeforeToday as LastBusinessDay_BeforeToday
+select @FirstDayOfPreviousMonth as FirstDayOfPreviousMonth
+select @LastDayOfPreviousMonth as LastDayOfPreviousMonth
+
+select *
+from FactSales s
+where s.DateKey between '20080401' and '20080430'

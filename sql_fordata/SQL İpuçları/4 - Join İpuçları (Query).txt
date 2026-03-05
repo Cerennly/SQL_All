@@ -1,0 +1,85 @@
+drop table if exists #sales
+create table #sales
+(
+    SalesKey INT,
+    ChannelKey INT,
+    SalesAmount INT
+)
+
+INSERT INTO #sales
+VALUES
+    (1001, 1, 100),
+    (1002, 2, 50),
+	(1003, 3, 200),
+	(1004, 4, 300)
+
+
+
+drop table if exists #channel 
+create table #channel
+(
+    ChannelKey INT,
+    ChannelName nvarchar(20)
+)  
+
+INSERT INTO #channel
+VALUES
+    (1, 'Store'),
+	(2, 'Online'),
+    (5, 'Catalog')
+
+
+select *
+from #sales
+
+select *
+from #channel
+
+-------------------- LEFT JOIN --------------------
+
+select * 
+from #sales s 
+left join #channel c on c.ChannelKey = s.ChannelKey 
+
+--------------------
+
+select * 
+from #sales s 
+left join #channel c on c.ChannelKey = s.ChannelKey and c.ChannelKey = 2 
+
+--------------------
+
+select *
+from #sales s 
+left join (
+
+			select *
+			from #channel ch
+			where ch.ChannelKey = 2 
+
+			) c on c.ChannelKey = s.ChannelKey
+
+--------------------
+
+select * 
+from #sales s 
+left join #channel c on c.ChannelKey = s.ChannelKey 
+where c.ChannelKey = 2
+
+-------------------- INNER JOIN --------------------
+
+select *
+from #sales
+
+select *
+from #channel
+
+select * 
+from #sales s 
+inner join #channel c on c.ChannelKey = s.ChannelKey and c.ChannelKey = 2
+
+
+select * 
+from #sales s 
+inner join #channel c on c.ChannelKey = s.ChannelKey 
+where c.ChannelKey = 2
